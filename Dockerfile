@@ -19,7 +19,7 @@ RUN wget https://archive.apache.org/dist/tomcat/tomcat-8/v8.5.55/bin/apache-tomc
 RUN cd /tmp && tar xvfz tomcat.tar.gz
 RUN mv /tmp/apache-tomcat-8.5.55 /opt/tomcat
 
-COPY package/target/ABCtechnologies-1.0.war /opt/tomcat/webapps/
+COPY target/ABCtechnologies-1.0.war /opt/tomcat/webapps/
 
 EXPOSE 8080
 CMD /opt/tomcat/bin/catalina.sh run
