@@ -5,24 +5,24 @@
       shell: | 
          if [ `kubectl --kubeconfig=/home/devops/.kube/config get deployment | grep -v NAME | awk '{print $1}' | grep sampleapp | wc -l` -gt 0 ]; then  
             echo "deleteing previous application deployment"
-            kubectl delete deployment `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep abctechnologies`
+            kubectl --kubeconfig=/home/devops/.kube/config delete deployment `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep abctechnologies`
             echo "creating new application deployment"
-            kubectl create deployment abctechnologies --image=evansken1/abctechnologies:{{ build }}
+            kubectl --kubeconfig=/home/devops/.kube/config create deployment abctechnologies --image=evansken1/abctechnologies:{{ build }}
          else 
             echo "Deploying ABCtechnologies Application"
-            kubectl create deployment abctechnologies --image=evansken1/abctechnologies:{{ build }}
+            kubectl --kubeconfig=/home/devops/.kube/config create deployment abctechnologies --image=evansken1/abctechnologies:{{ build }}
          fi
     - name: deploying service
       shell: |
-         if [ `kubectl get svc | grep sampleapp  | awk '{print $1}' | wc -l` -gt 0 ]; then
+         if [ `kubectl --kubeconfig=/home/devops/.kube/config get svc | grep sampleapp  | awk '{print $1}' | wc -l` -gt 0 ]; then
             echo "app service found, No actions taken"
             #kubectl delete svc `kubectl get svc | grep sampleapp | awk '{print $1}'`
          else
             echo "Creating App Services"
-            kubectl expose deployment abctechnologies --name abctechnologies --type NodePort --port 80 --target-port 8080
+            kubectl --kubeconfig=/home/devops/.kube/config expose deployment abctechnologies --name abctechnologies --type NodePort --port 80 --target-port 8080
          fi
     - name: increase replicas 
-      shell: kubectl scale deploy abctechnologies --replicas=2
+      shell: kubectl --kubeconfig=/home/devops/.kube/config  scale deploy abctechnologies --replicas=2
       
     #- name: deploy app
     #  shell: kubectl create deployment sampleapp --image=lerndevops/samplejavaapp:{{ build }}
