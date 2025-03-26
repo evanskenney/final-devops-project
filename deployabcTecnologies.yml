@@ -3,7 +3,7 @@
   tasks: 
     - name: Deploying Application pods...
       shell: | 
-         if [ `kubectl --kubeconfig=/home/devops/.kube/config get deployment | grep -v NAME | awk '{print $1}' | grep sampleapp | wc -l` -gt 0 ]; then  
+         if [ `kubectl --kubeconfig=/home/devops/.kube/config get deployment | grep -v NAME | awk '{print $1}' | grep abctechnologies | wc -l` -gt 0 ]; then  
             echo "deleteing previous application deployment"
             kubectl --kubeconfig=/home/devops/.kube/config delete deployment `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep abctechnologies`
             echo "creating new application deployment"
@@ -14,9 +14,9 @@
          fi
     - name: deploying service
       shell: |
-         if [ `kubectl --kubeconfig=/home/devops/.kube/config get svc | grep sampleapp  | awk '{print $1}' | wc -l` -gt 0 ]; then
+         if [ `kubectl --kubeconfig=/home/devops/.kube/config get svc | grep abctechnologies  | awk '{print $1}' | wc -l` -gt 0 ]; then
             echo "app service found, No actions taken"
-            #kubectl delete svc `kubectl get svc | grep sampleapp | awk '{print $1}'`
+            #kubectl delete svc `kubectl get svc | grep abctechnologies | awk '{print $1}'`
          else
             echo "Creating App Services"
             kubectl --kubeconfig=/home/devops/.kube/config expose deployment abctechnologies --name abctechnologies --type NodePort --port 80 --target-port 8080
