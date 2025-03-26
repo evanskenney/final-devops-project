@@ -3,7 +3,7 @@
   tasks: 
     - name: Deploying Application pods...
       shell: | 
-         if [ `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep sampleapp | wc -l` -gt 0 ]; then  
+         if [ `kubectl --kubeconfig=/home/devops/.kube/config get deployment | grep -v NAME | awk '{print $1}' | grep sampleapp | wc -l` -gt 0 ]; then  
             echo "deleteing previous application deployment"
             kubectl delete deployment `kubectl get deployment | grep -v NAME | awk '{print $1}' | grep abctechnologies`
             echo "creating new application deployment"
